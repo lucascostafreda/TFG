@@ -109,11 +109,11 @@ for iGeneration = 1: numberOfGenerations % 2 (numbOfGenerations)* 15 (PI config)
         %% CROSS-OVER
         r = rand;
         if ( r < crossoverProbability)
-            while 
+            % while 
                 newChromosomePair = Cross(chromosome1, chromosome2);
                 newPopulation(i,:) = newChromosomePair(1,:);
                 newPopulation(i+1,:) = newChromosomePair(2,:);
-            end
+            % end
         else
             newPopulation(i,:) = chromosome1;
             newPopulation(i+1,:) = chromosome2;
