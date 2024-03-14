@@ -1,6 +1,6 @@
 # Ignore all .mat files
 *.mat
-*.Zone.Identifier
+*.Identifier
 
 # Ignore specific directories
 data/
