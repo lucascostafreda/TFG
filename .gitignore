@@ -1,0 +1,12 @@
+# Ignore all .mat files
+*.mat
+*.Zone.Identifier
+
+# Ignore specific directories
+data/
+temp/
+binaries/
+
+# Ignore specific files
+config.ini
+secret.txt
