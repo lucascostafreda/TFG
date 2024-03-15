@@ -98,7 +98,7 @@ for iGeneration = 1: numberOfGenerations % 2 (numbOfGenerations)* 15 (PI config)
     %% COPY POPULATION
     newPopulation = population;
 
-%PONER RESTRICCIONES PARA MEJORES ACTUALIZACIONES
+%PONER RESTRICCIONES PARA MEJORES ACTUALIZACI
 
     %% NEW GENERATION
     for i = 1:tournamentSize:populationSize

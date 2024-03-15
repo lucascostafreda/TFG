@@ -40,12 +40,12 @@ else
     for index = 1:size(decodedPIs, 1)
         updated_PI = decodedPIs(index,:);
         % PI = [1,1, updated_PI, 1,1, updated_PI];
-        PI = [updated_PI, updated_PI];
-        resourceUsage = sum(r.*PI);
+        % PI = [updated_PI, updated_PI];
+        resourceUsage = sum(r.*updated_PI);
         if resourceUsage > available_RBs 
             fitnessValue(index)= -15;
         else 
-            a = runFLEnviroment(PI,iteration, averagenumber);
+            a = runFLEnviroment(updated_PI,iteration, averagenumber);
             fitnessValue(index)= -a ;
         end
     end
