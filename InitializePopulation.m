@@ -109,7 +109,7 @@ function piValue = randomizePI(basePI, isAboveHalf)
     end
 end
 
-function [decodedPopul, individualRBs] = decodeAndCalculateRB(population, numberOfVariables, r, numberOfBits)
+function [decodedPopul, individualRBs] = decodeAndCalculateRB(population, numberOfVariables, r, numberOfBits)   
     populationSize = size(population, 1);
     decodedPopul = zeros(populationSize, numberOfVariables);
     individualRBs = zeros(populationSize, 1);

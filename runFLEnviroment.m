@@ -368,15 +368,16 @@ function fitness = runFLEnviroment(PI, iteration, averagenumber)
     save(filename_acc, 'average_accuracy'); % de momento solo cogerá la de la segunda average
     
     %Average resources used for each PI config
-    average_RB(rep) =  mean(squeeze(RB_used(rep,:,:)), 'all');
+    RB_usedAverage(rep) =  mean(squeeze(RB_used(rep,:,:)), 'all');
     
     end
     
     for rep=1:1:PI_trials
-            fprintf('Rep %d, Average RB = %.4f\n', rep, average_RB(rep));
+            fprintf('Rep %d, Average RB = %.4f\n', rep, RB_usedAverage(rep));
     end
     %comparePIConfigurations();
-    fitness=mean(average_deviation(:));
+    fitness=average_deviation(iteration); %Instead of averaging, we get the last one
+    
 end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

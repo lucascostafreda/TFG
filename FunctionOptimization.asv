@@ -67,6 +67,8 @@ for iGeneration = 1: numberOfGenerations % 2 (numbOfGenerations)* 15 (PI config)
         fprintf('Best Solution: %d\n',xBest); 
 
     end
+
+    %% register data
     allPopulations{iGeneration} = decodedPopulation;
     allFitnessValues{iGeneration} = fitness;
     
@@ -98,7 +100,7 @@ for iGeneration = 1: numberOfGenerations % 2 (numbOfGenerations)* 15 (PI config)
     %% COPY POPULATION
     newPopulation = population;
 
-%PONER RESTRICCIONES PARA MEJORES ACTUALIZACI
+% PONER RESTRICCIONES PARA MEJORES ACTUALIZACIONES
 
     %% NEW GENERATION
     for i = 1:tournamentSize:populationSize
@@ -110,12 +112,10 @@ for iGeneration = 1: numberOfGenerations % 2 (numbOfGenerations)* 15 (PI config)
 
         %% CROSS-OVER
         r = rand;
-        if ( r < crossoverProbability)
-            % while 
-                newChromosomePair = Cross(chromosome1, chromosome2);
+        if ( r < crossoverProbability) 
+                newChromosomePair = Cross(chromosome1, chromosome2, r, available_RBs, numberOfVariables); % con restricciones
                 newPopulation(i,:) = newChromosomePair(1,:);
                 newPopulation(i+1,:) = newChromosomePair(2,:);
-            % end
         else
             newPopulation(i,:) = chromosome1;
             newPopulation(i+1,:) = chromosome2;
@@ -132,11 +132,9 @@ for iGeneration = 1: numberOfGenerations % 2 (numbOfGenerations)* 15 (PI config)
     %% COPY THE NEW POPULATION ONTO CURRENT POPULATION
     population = newPopulation;
 
-
-    %% PLOT CURRENT SITUATION
-
 end
-
+    
+ %% PLOT CURRENT SITUATION
 if draw_plots
     
     for iGen = 1:numberOfGenerations
