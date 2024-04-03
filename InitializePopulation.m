@@ -47,6 +47,14 @@ function [population,decodedPopul, individualRBs, averageRBsInit] = InitializePo
     baseTempPI = baseTempPI / max(baseTempPI); % Ensure max baseTempPI is scaled to 1
 
     %Iteratively increase sorted PI to maximize resource use without exceeding constraints
+    % for i   numberOfBits = numberOfGenes / numberOfVariables; % Assuming equal distribution of bits per user.
+
+    % Normalize tempPI based on inverse of r for the whole set of variables
+    invR = 1 ./ r;
+    baseTempPI = invR / sum(invR);
+    baseTempPI = baseTempPI / max(baseTempPI); % Ensure max baseTempPI is scaled to 1
+
+    %Iteratively increase sorted PI to maximize resource use without exceeding constraints
     % for i = 1:length(sortedTempPI)
     %     while true
     %         incrementedPI = sortedTempPI;
@@ -118,4 +126,5 @@ function [decodedPopul, individualRBs] = decodeAndCalculateRB(population, number
         decodedPopul(i, :) = DecodeChromosome(population(i, :), numberOfVariables);
         individualRBs(i) = sum(decodedPopul(i, :) .* r); % Ensure compliance with constraint
     end
-end
+end 
+    

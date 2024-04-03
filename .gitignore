@@ -1,6 +1,7 @@
-# Ignore all .mat files
+# Ignore all .mat, .Identifier files
 *.mat
 *.Identifier
+*.py
 
 # Ignore specific directories
 data/

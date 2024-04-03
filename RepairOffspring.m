@@ -15,7 +15,7 @@ function repairedPI = RepairOffspring(decodedPI, r, available_RBs)
         % Calculate how much the current PI can be reduced
         maxReduction = (totalUsage - available_RBs) / sortedR(i);
         
-        % Reduce the PI value as needed, without going below 0
+            
         reduction = min(maxReduction, sortedPI(i));
         sortedPI(i) = sortedPI(i) - reduction;
         

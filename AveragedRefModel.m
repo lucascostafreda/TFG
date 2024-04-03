@@ -13,7 +13,7 @@ function AveragedRefModel(numRepetitions, filenamePattern, iterations)
     end
     %%%%%%%%%%%%%%%%%%% Printing weights %%%%%%%%%%%%%%%%%%%%%%%%%
     % Print W1(1,1) for the first iteration of each repetition
-    fprintf('\nValues of W1(1,1) for all repetitions in Iteration 1:\n');
+    fprintf('\n Values of W1(1,1) for all repetitions in Iteration 1:\n');
     for rep = 1:numRepetitions
         filename = sprintf(filenamePattern, rep);
         loadedData = load(filename);

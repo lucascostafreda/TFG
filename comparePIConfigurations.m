@@ -11,9 +11,9 @@ end
 
 function [deviationDifference1, deviationDifference2]  = computeDeviationDifference()
     % Load the deviation vectors from the saved files
-    data1 = load('deviation_PI_1.mat');
-    data2 = load('deviation_PI_2.mat');
-    data3 = load('deviation_PI_3.mat');
+    data1 = load('/gpfs/workdir/costafrelu/deviation_PI_1.mat');
+    data2 = load('/gpfs/workdir/costafrelu/deviation_PI_2.mat');
+    data3 = load('/gpfs/workdir/costafrelu/deviation_PI_3.mat');
     
 
     % Extract the deviation vectors from the loaded data
@@ -31,9 +31,9 @@ end
 
 function plotAccuracyComparison()
     % Load the accuracy vectors from the saved files
-    data1 = load('Accuracy_PI_1.mat');
-    data2 = load('Accuracy_PI_2.mat');
-    data3 = load('Accuracy_PI_3.mat');
+    data1 = load('/gpfs/workdir/costafrelu/Accuracy_PI_1.mat');
+    data2 = load('/gpfs/workdir/costafrelu/Accuracy_PI_2.mat');
+    data3 = load('/gpfs/workdir/costafrelu/Accuracy_PI_3.mat');
 
     % Extract the accuracy vectors from the loaded data
     accuracy1 = data1.average_accuracy;

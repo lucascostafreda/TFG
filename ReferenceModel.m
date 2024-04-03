@@ -1,4 +1,4 @@
-clear all
+% clear all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% data processing %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 categories = {'deer','dog','frog','cat','bird','automobile','horse','ship','truck','airplane'};
@@ -20,8 +20,8 @@ imds = imageDatastore(fullfile(rootFolder, categories), ...
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%
-repetitions=6;  % Repeticiones, para promediar el error del pack al final !!
-iteration=65;     % Total number of global FL iterations.
+repetitions=1;  % Repeticiones, para promediar el error del pack al final !!
+iteration=4;     % Total number of global FL iterations.
 usernumber=8;
 %RB_used = zeros(iteration,1);
 learningrate=0.008;
@@ -135,7 +135,7 @@ option = trainingOptions('adam', ...
     'MaxEpochs', 1, ...
     'MiniBatchSize', 50, ...
     'ExecutionEnvironment','parallel',...
-    'Shuffle', 'every-epoch',... % mezclar antes de cada epoch, no sirve de mucho, pues pasasuna vez
+    'Shuffle', 'never',... % mezclar antes de cada epoch, no sirve de mucho, pues pasasuna vez
     'Verbose', true);%,... 
     %'Plots', 'training-progress'); 
 %%%%%%%%%%%%%%%%%%%%%%%%% FIGURES INIT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

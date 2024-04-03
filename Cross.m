@@ -38,9 +38,8 @@ function newChromosomePair = Cross(chromosome1, chromosome2, r, available_RBs, n
             % Repair the offspring
             repairedPI = RepairOffspring(decodedPI, r, available_RBs);
             % Re-encode the repaired offspring back into binary form
-            tempOffspring = EncodeChromosome(repairedPI, numberOfVariables, numberOfGenes);
+            tempOffspring = EncodeChromosome(repairedPI, numberOfVariables, nGenes);
         end
-        
         newChromosomePair(i, :) = tempOffspring;
     end
 end

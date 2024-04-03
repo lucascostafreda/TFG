@@ -1,7 +1,8 @@
-function fitness = runFLEnviroment(PI, iteration, averagenumber)
+function fitness = runFLEnviroment(PI, iteration, averagenumber, r)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%% data processing %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     categories = {'deer','dog','frog','cat','bird','automobile','horse','ship','truck','airplane'};
     
+    % rootFolder = '/gpfs/workdir/costafrelu/cifar10Test';
     rootFolder = 'cifar10Test';
     imds_test = imageDatastore(fullfile(rootFolder, categories), ...
         'LabelSource', 'foldernames');
@@ -9,6 +10,7 @@ function fitness = runFLEnviroment(PI, iteration, averagenumber)
     
      categories = {'deer','dog','frog','cat','bird','automobile','horse','ship','truck','airplane'};
     
+    % rootFolder = '/gpfs/workdir/costafrelu/cifar10Train';
     rootFolder = 'cifar10Train';
     imds = imageDatastore(fullfile(rootFolder, categories), ... 
         'LabelSource', 'foldernames');
@@ -17,6 +19,7 @@ function fitness = runFLEnviroment(PI, iteration, averagenumber)
     %%%%%%%%%%%%%%%%%%%% IID dataset %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
     [imds1, imds2, imds3, imds4, imds5, imds6, imds7, imds8] = splitEachLabel(imds, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125);
     
+    % load('/gpfs/workdir/costafrelu/Ref_Model_65_i_6_r.mat'); % Loads `allParams`
     load('Ref_Model_65_i_6_r.mat'); % Loads `allParams`
     
     % averagenumber = 1;  % Average number of runing simulations.  Repeticiones, para promediar el error del pack al final !!
@@ -27,8 +30,8 @@ function fitness = runFLEnviroment(PI, iteration, averagenumber)
     
     % Static definition of CQI
     % CQI_indices = randi([1 15], 1, usernumber);
-    CQI_indices = [12, 10, 8, 6, 12, 10, 8, 6];
-    [r, eta, sigma] = parameters(CQI_indices);
+    % CQI_indices = [12, 10, 8, 6, 12, 10, 8, 6];
+    % [r, eta, sigma] = parameters(CQI_indices);
     
     %%%%%%%%%%%%%%%%%%%%%%%% coding setting %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     varSize = 32; 
@@ -363,10 +366,16 @@ function fitness = runFLEnviroment(PI, iteration, averagenumber)
         average_deviation(ite) = mean(squeeze(deviation(ite,:)), 'all');
         average_accuracy(ite) = mean(squeeze(accuracy2(ite,:)), 'all');
     end
+    
+    %filename_dev = fullfile('/gpfs/workdir/costafrelu/', filename_dev);
+       filename_dev = fullfile('C:\Users\Lucas\OneDrive\Documentos\MATLAB\TFG\workdir\', filename_dev);
     save(filename_dev, 'average_deviation');
-    %save('gradient_vector.mat', 'totalGradient');
+    %filename_acc = fullfile('/gpfs/workdir/costafrelu/', filename_acc);
+    filename_acc = fullfile('C:\Users\Lucas\OneDrive\Documentos\MATLAB\TFG\workdir\', filename_acc);
     save(filename_acc, 'average_accuracy'); % de momento solo cogerá la de la segunda average
     
+    %save('gradient_vector.mat', 'totalGradient');
+
     %Average resources used for each PI config
     RB_usedAverage(rep) =  mean(squeeze(RB_used(rep,:,:)), 'all');
     

@@ -17,7 +17,7 @@ r = [196.3993,100.4880,61.7281,43.2719, 196.3993,100.4880,61.7281,43.2719];
 iteration = 1 ;
 averagenumber = 1 ;
 
-populationSize = 5; %cantidad de PI config
+populationSize = 2; %cantidad de PI config
 %numberOfGenes = 8; % 8 (2x4 bits)
 numberOfGenes = 32;
 crossoverProbability = 0.8 ;
