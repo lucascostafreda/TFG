@@ -1,4 +1,5 @@
 function [fitness, RB_usedAverage]  = runFLEnviroment_RUCHE(PI, iteration, averagenumber, r, ruche)
+
     %%%%%%%%%%%%%%%%%%%%%%%%%%%% data processing %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     categories = {'deer','dog','frog','cat','bird','automobile','horse','ship','truck','airplane'};
     
