@@ -1,0 +1,50 @@
+function FilteredTable = ProcessAndFilterTable(Table)
+    % Convertir la columna de generaciones a numérica, extrayendo solo el primer valor
+    firstGenValues = cellfun(@(x) str2double(regexp(x, '\d+', 'match', 'once')), Table.Generation);
+    Table.FirstGen = firstGenValues;
+    
+    % Convertir todos los valores de fitness a positivos
+    Table.Fitness = abs(Table.Fitness);
+    
+    % Inicializar la tabla filtrada y el mejor valor de fitness registrado (ahora buscamos el mínimo ya que son positivos)
+    FilteredData = [];
+    bestFitnessSoFar = inf; % Cambio para buscar el valor mínimo ahora que son positivos
+    
+    % Obtener las generaciones únicas y ordenarlas
+    uniqueGenerations = unique(Table.FirstGen);
+    
+    for iGen = uniqueGenerations'
+        % Seleccionar filas de la generación actual y ordenarlas por fitness de mayor a menor
+        currentGenRows = Table(Table.FirstGen == iGen, :);
+        sortedCurrentGen = sortrows(currentGenRows, 'Fitness', 'descend');
+        
+        % Filtrar los cromosomas que, siendo positivos, son menores que el mejor fitness registrado hasta el momento
+        for iRow = 1:height(sortedCurrentGen)
+            if sortedCurrentGen.Fitness(iRow) < bestFitnessSoFar
+                bestFitnessSoFar = sortedCurrentGen.Fitness(iRow);
+                FilteredData = [FilteredData; sortedCurrentGen(iRow, :)];
+            end
+        end
+    end
+    
+    % La tabla filtrada ya tiene los fitness en valores positivos y ordenados como se desea
+    FilteredTable = FilteredData;
+    
+    % Graficar la evolución de los fitnesses seleccionados
+    PlotFitnessEvolution(FilteredTable);
+    
+    % Función para graficar la evolución de los fitnesses
+    function PlotFitnessEvolution(PlotData)
+        % Usar un índice secuencial para el eje x
+        sequentialIndex = 1:height(PlotData);
+        fitnessValues = PlotData.Fitness;
+        
+        figure;
+        scatter(sequentialIndex, fitnessValues, 'filled');
+        xlabel('Sequential Chromosome Number');
+        ylabel('Fitness Value');
+        title('Evolution of Selected Fitness Values Over Time (Descending)');
+        grid on;
+        % MATLAB ajustará automáticamente los límites del eje y para acomodar los datos
+    end
+end
