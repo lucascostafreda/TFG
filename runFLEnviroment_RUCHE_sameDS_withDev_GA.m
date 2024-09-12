@@ -1,14 +1,5 @@
-% 
-% function [deviationFitness, accuracyFitness, RB_usedAverage, average_deviation, varianzas]  = runFLEnviroment_RUCHE_noQ_sameDS_2(PI, iteration, averagenumber, r,...
-%     ruche,verbose, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, refModelName, directory_RefModel,directory_tempDir, FragSDS, percentages, iPI)
-  
-function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, iteration, averagenumber, r,...
-    ruche,verbose, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, refModelName, directory_RefModel,directory_tempDir, FragSDS, percentages, iPI) 
-   % Este cambia en que imporatas la distribución del DS creado por el
-   % RefModel
-   % Además, hay que tener MUCHO cuidado que lo compares también con el REF
-   % MOD que corresponde a la distribución anterior
-    % Inicializar baseDir y tempDir según el valor de ruche 
+    function [deviationFitness, accuracyFitness,  RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS_withDev_GA(PI, iteration, averagenumber, r,...
+    ruche,verbose, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, refModelName, directory_RefModel,directory_tempDir, FragSDS, percentages) 
     
     if ruche 
         fullpath_baseDir = fullfile('/gpfs/workdir/costafrelu/RefModelParam_noQ_sameDS/', directory_RefModel);
@@ -17,42 +8,15 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
             mkdir(fullpath_tempDir);
         end
     else
-<<<<<<< HEAD
-        fullpath_baseDir = fullfile('..\workdir\RefModelParam_noQ_sameDS\', directory_RefModel);
-       
-    end
-
-    % load(fullfile(fullpath_baseDir, refModelName)); % Carga `allParams`
-
-    loaded_imds1 = load(fullfile(fullpath_baseDir, 'imds1.mat'));
-    loaded_imds2 = load(fullfile(fullpath_baseDir, 'imds2.mat'));
-    loaded_imds3 = load(fullfile(fullpath_baseDir, 'imds3.mat'));
-    loaded_imds4 = load(fullfile(fullpath_baseDir, 'imds4.mat'));
-    loaded_imds5 = load(fullfile(fullpath_baseDir, 'imds5.mat'));
-    loaded_imds6 = load(fullfile(fullpath_baseDir, 'imds6.mat'));
-    loaded_imds7 = load(fullfile(fullpath_baseDir, 'imds7.mat'));
-    loaded_imds8 = load(fullfile(fullpath_baseDir, 'imds8.mat'));
-    imds1 = loaded_imds1.imds;
-    imds2 = loaded_imds2.imds;
-    imds3 = loaded_imds3.imds;
-    imds4 = loaded_imds4.imds;
-    imds5 = loaded_imds5.imds;
-    imds6 = loaded_imds6.imds;
-    imds7 = loaded_imds7.imds;
-    imds8 = loaded_imds8.imds;
-    
-    loaded_imds_test = load(fullfile(fullpath_baseDir, 'imds_test.mat'));
-    imds_test = loaded_imds_test.imds_test;
-=======
-        fullpath_baseDir = fullfile('..\workdir\RefModelParam_noQ_sameDS\', directory_RefModel); 
+        fullpath_baseDir = fullfile('C:\Users\lcost\OneDrive\Documentos\MATLAB\TFG\workdir\RefModelParam_noQ_sameDS\RUCHE', directory_RefModel); 
         fullpath_tempDir = fullfile('..\workdir\temporaryMat\', directory_tempDir);
         if ~exist(fullpath_tempDir, 'dir')
             mkdir(fullpath_tempDir);
         end
     end
 
-    % load(fullfile(fullpath_baseDir, refModelName)); % Carga `allParams`
-    % 
+    load(fullfile(fullpath_baseDir, refModelName)); % Carga `allParams`
+
     % loaded_imds1 = load(fullfile(fullpath_baseDir, 'imds1.mat'));
     % loaded_imds2 = load(fullfile(fullpath_baseDir, 'imds2.mat'));
     % loaded_imds3 = load(fullfile(fullpath_baseDir, 'imds3.mat'));
@@ -72,13 +36,12 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
     % 
     % loaded_imds_test = load(fullfile(fullpath_baseDir, 'imds_test.mat'));
     % imds_test = loaded_imds_test.imds_test;
->>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     
     usernumber = 8;  
     varSize=32;
     
     %%%%%%%%%%%%%%%%%%%%%%%% coding setting %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    varSize = 32; 
+     varSize = 32; 
     v_fQRate = [1, 2];
     v_nQuantizaers   = [...          % Curves
         0 ...                   % Dithered 3-D lattice quantization 
@@ -119,7 +82,7 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
     
     RB_used = zeros(averagenumber,iteration);
 
-    % deviation = zeros(iteration,averagenumber); 
+    deviation = zeros(iteration,averagenumber); 
     accuracy = zeros(iteration,averagenumber);
     accuracy2 = zeros(iteration,averagenumber);
 
@@ -129,8 +92,8 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
     % for rep = 1:1:PI_trials  
     for average=1:1:averagenumber
         
-        filename_dev = sprintf('Temp_Deviation_PI_%d.mat', iPI);
-        filename_acc = sprintf('Temp_Accuracy_PI_%d.mat', iPI);
+        filename_dev = sprintf('Temp_Deviation_PI');
+        filename_acc = sprintf('Temp_Accuracy_PI');
 
     %%%%%%%%%%%%% local model of each user%%%%%%%%%%%%%%%%%%%%%%%  
     w1=[];
@@ -176,42 +139,8 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
         %'Plots', 'training-progress');
         
     for i=1:1:iteration
-    
-    % currentRefParams = avgParams(i);
 
-<<<<<<< HEAD
-    for user = 1:usernumber
-        if FragSDS==1 && percentages(user)~=1
-            % Load dataset for the user
-            loaded_imds = load(fullfile(fullpath_baseDir, sprintf('imds%d.mat', user)));
-            imds = loaded_imds.imds;
-    
-            % Shuffle and split the dataset according to the current percentage
-            imds = shuffle(imds);
-            imds = splitEachLabel(imds, percentages(user));  % Use the dynamically chosen percentage
-    
-            % Assign the processed data back to the original variable dynamically
-            eval(sprintf('imds%d = imds;', user));
-       end
-    end
-
-    for user=1:1:usernumber  
-
-=======
-    % for user = 1:usernumber
-    %     if FragSDS==1 && percentages(user)~=1
-    %         % Load dataset for the user
-    %         loaded_imds = load(fullfile(fullpath_baseDir, sprintf('imds%d.mat', user)));
-    %         imds = loaded_imds.imds;
-    % 
-    %         % Shuffle and split the dataset according to the current percentage
-    %         imds = shuffle(imds);
-    %         imds = splitEachLabel(imds, percentages(user));  % Use the dynamically chosen percentage
-    % 
-    %         % Assign the processed data back to the original variable dynamically
-    %         eval(sprintf('imds%d = imds;', user));
-    %    end
-    % end
+    %%%%%%%%%%%%%%%%%%% Pre Processing %%%%%%%%%%%%%%%%%
     categories = {'deer','dog','frog','cat','bird','automobile','horse','ship','truck','airplane'};
     
     if ruche
@@ -234,27 +163,28 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
       
      imds = imageDatastore(fullfile(rootFolder, categories), ... 
         'LabelSource', 'foldernames');
+     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    
-         %%
-        %%%%%%%%%%%%%%%%%%%% IID dataset %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-        %CHANGE
-        % [imds1, imds2, imds3, imds4, imds5, imds6, imds7, imds8] = splitEachLabel(imds, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125);
-       
+    currentRefParams = avgParams(i);
+
     % for user = 1:usernumber
+    %     if FragSDS==1 && percentages(user)~=1
+    %         % Load dataset for the user
+    %         loaded_imds = load(fullfile(fullpath_baseDir, sprintf('imds%d.mat', user)));
+    %         imds = loaded_imds.imds;
     % 
+    %         % Shuffle and split the dataset according to the current percentage
+    %         imds = shuffle(imds);
+    %         imds = splitEachLabel(imds, percentages(user));  % Use the dynamically chosen percentage
+    % 
+    %         % Assign the processed data back to the original variable dynamically
+    %         eval(sprintf('imds%d = imds;', user));
+    %    end
     % end
 
     for user=1:1:usernumber  
-
-            % Load dataset for the user
-            % loaded_imds = load(fullfile(fullpath_baseDir, sprintf('imds%d.mat', user)));
-            % imds = loaded_imds.imds;
-    
-            % Shuffle and split the dataset according to the current percentage
-            % imds = shuffle(imds);
-            % imds = splitEachLabel(imds, percentages(user));  % Use the dynamically chosen percentage
-    
+        
+        %%%%%%%%% DataSet Split %%%%%%%%
         imds = shuffle(imds);
         [splits{1:8}] = splitEachLabel(imds, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125);  % Split into 8 parts
         imds_user = splits{user}; 
@@ -262,10 +192,8 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
             imds_user = splitEachLabel(imds_user, percentages(user));
         end
         eval(sprintf('imds%d = imds_user;', user));
-    % 
-    % for user=1:1:usernumber  
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
->>>>>>> 9c6ccc124 (Reinicializando el repositorio)
         clear netvaluable;
         Winstr1=strcat('net',int2str(user));     
         midstr=strcat('imds',int2str(user)); 
@@ -412,8 +340,8 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
                 deviationb3(1,1,:)=reshape(m_fHhat1(bstart+b1length+b2length+1:bstart+b1length+b2length+b3length),[1,1,64]);
                 deviationb4(:,1)=m_fHhat1(bstart+b1length+b2length+b3length+1:bstart+b1length+b2length+b3length+b4length);
                 deviationb5(:,1)=m_fHhat1(bstart+b1length+b2length+b3length+b4length+1:bstart+b1length+b2length+b3length+b4length+b5length);
-        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+        
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
              %%%%%%%%%%%%%%%% calculate the local FL model of each user AFTER CODING %%%%%%%%%%%%  
              % esto se hace estrictamente para calcular el global 
              % (has codificado y decodificado los parametros)
@@ -452,7 +380,7 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
     %%%%%%%%%%%%%%%%%%%%%%%%% UPDATE PI POLICY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             
     
-            % deviation(i,average) = objectiveFunction(globalw1, globalw2, globalw3, globalw4, globalw5, globalb1, globalb2, globalb3, globalb4, globalb5, currentRefParams);
+            deviation(i,average) = objectiveFunction(globalw1, globalw2, globalw3, globalw4, globalw5, globalb1, globalb2, globalb3, globalb4, globalb5, currentRefParams);
 
     end
 
@@ -460,21 +388,21 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
 
     end %end average
 
-     % average_deviation = zeros(iteration,1);
+     average_deviation = zeros(iteration,1);
      average_accuracy = zeros(iteration,1);
-     % varianzas = zeros(iteration, 1);
+     varianzas = zeros(iteration, 1);
      
 
     for ite=1:1:iteration
-        % average_deviation(ite) = mean(squeeze(deviation(ite,:)), 'all'); % if average=0, we do no need to compute the mean
+        average_deviation(ite) = mean(squeeze(deviation(ite,:)), 'all'); % if average=0, we do no need to compute the mean
         average_accuracy(ite) = mean(squeeze(accuracy2(ite,:)), 'all');
-        % varianzas(i) = var(deviation(i,:)); % Calculo de varianza
+        varianzas(i) = var(deviation(i,:)); % Calculo de varianza
     end
     
     %This is if later I would like to represent them.
     if AccDevMat
         % Guardar los archivos en las ubicaciones correspondientes
-        % save(fullfile(fullpath_tempDir, filename_dev), 'average_deviation');
+        save(fullfile(fullpath_tempDir, filename_dev), 'average_deviation');
         save(fullfile(fullpath_tempDir, filename_acc), 'average_accuracy');
     end
 
@@ -486,7 +414,7 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS(PI, i
     % end
 
     % fitness=average_deviation(iteration); %Instead of averaging, we get the last one
-    % deviationFitness=average_deviation(iteration);
+    deviationFitness=average_deviation(iteration);
     accuracyFitness=average_accuracy(iteration);
     % ResourceFitness=sum(r.*PI);
 

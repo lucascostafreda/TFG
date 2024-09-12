@@ -138,11 +138,26 @@ for index = 1:size(decodedPIs, 1)
         else
             KK = KK + 1;  
             % Evaluate the chromosome to obtain fitness and resource usage
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                [a, accuracy, RB_used] = runFLEnviroment_RUCHE_sameDS_withDev_GA(updated_PI, iteration, averagenumber, r, ruche, verboseFL, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, refModelName, directory_RefModel,directory_tempDir, FragSDS, percentages);
+            
+                % a= round(6 + (8-6).*rand(1,1), 2);
+                % accuracy = 0.40 + (0.70 - 0.40) * rand(1, 1);
+                % 
+                % RB_used=400;
+=======
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
             [a, accuracy, RB_used] = runFLEnviroment_RUCHE_noQ_sameDS(updated_PI, iteration, averagenumber, r, ruche, verboseFL, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, refModelName, directory_RefModel,directory_tempDir, FragSDS, percentages);
             % a= round(6 + (8-6).*rand(1,1), 2);
             % accuracy = 0.40 + (0.70 - 0.40) * rand(1, 1);
             % 
             % RB_used=400;
+<<<<<<< HEAD
+=======
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
             % 
             aux = -a;  % Assuming 'a' represents some form of fitness negativity
             auxAcc = accuracy;  % Direct use of accuracy as obtained from the function

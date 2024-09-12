@@ -3,13 +3,25 @@
 %     ruche,verbose, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, refModelName, directory_RefModel,directory_tempDir, FragSDS, percentages, iPI)
   
 function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS_withDev(PI, iteration, averagenumber, r,...
+<<<<<<< HEAD
     ruche,verbose, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, refModelName, directory_RefModel,directory_tempDir, FragSDS, percentages, iPI, iPER) 
+=======
+    ruche,verbose, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, refModelName, directory_RefModel, directory_tempDir, FragSDS, percentages, iPI, iPER) 
+
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
    % Este cambia en que imporatas la distribución del DS creado por el
    % RefModel
    % Además, hay que tener MUCHO cuidado que lo compares también con el REF
    % MOD que corresponde a la distribución anterior
+<<<<<<< HEAD
     % Inicializar baseDir y tempDir según el valor de ruche 
     
+=======
+    % Inicializar baseDir y tempDir según el valor de ruche     
+    
+    ratio = [0.1, 0.15, 0.2, 0.05, 0.1, 0.1, 0.1, 0.05, 0.1, 0.05];
+
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     if ruche 
         fullpath_baseDir = fullfile('/gpfs/workdir/costafrelu/RefModelParam_noQ_sameDS/', directory_RefModel);
         fullpath_tempDir = fullfile('/gpfs/workdir/costafrelu/temporaryMat/', directory_tempDir);
@@ -17,12 +29,22 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS_withD
             mkdir(fullpath_tempDir);
         end
     else
+<<<<<<< HEAD
         fullpath_baseDir = fullfile('..\workdir\RefModelParam_noQ_sameDS\', directory_RefModel);
        
+=======
+        % fullpath_baseDir = fullfile('..\workdir\RefModelParam_noQ_sameDS\', directory_RefModel); 
+        fullpath_baseDir = fullfile('C:\Users\lcost\OneDrive\Documentos\MATLAB\TFG\workdir\RefModelParam_noQ_sameDS\RUCHE', directory_RefModel); 
+        fullpath_tempDir = fullfile('..\workdir\temporaryMat\', directory_tempDir);
+        if ~exist(fullpath_tempDir, 'dir')
+            mkdir(fullpath_tempDir);
+        end
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     end
 
     load(fullfile(fullpath_baseDir, refModelName)); % Carga `allParams`
 
+<<<<<<< HEAD
     loaded_imds1 = load(fullfile(fullpath_baseDir, 'imds1.mat'));
     loaded_imds2 = load(fullfile(fullpath_baseDir, 'imds2.mat'));
     loaded_imds3 = load(fullfile(fullpath_baseDir, 'imds3.mat'));
@@ -43,6 +65,29 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS_withD
     loaded_imds_test = load(fullfile(fullpath_baseDir, 'imds_test.mat'));
     imds_test = loaded_imds_test.imds_test;
     
+=======
+    % loaded_imds1 = load(fullfile(fullpath_baseDir, 'imds1.mat'));
+    % loaded_imds2 = load(fullfile(fullpath_baseDir, 'imds2.mat'));
+    % loaded_imds3 = load(fullfile(fullpath_baseDir, 'imds3.mat'));
+    % loaded_imds4 = load(fullfile(fullpath_baseDir, 'imds4.mat'));
+    % loaded_imds5 = load(fullfile(fullpath_baseDir, 'imds5.mat'));
+    % loaded_imds6 = load(fullfile(fullpath_baseDir, 'imds6.mat'));
+    % loaded_imds7 = load(fullfile(fullpath_baseDir, 'imds7.mat'));
+    % loaded_imds8 = load(fullfile(fullpath_baseDir, 'imds8.mat'));
+    % imds1 = loaded_imds1.imds;
+    % imds2 = loaded_imds2.imds;
+    % imds3 = loaded_imds3.imds;
+    % imds4 = loaded_imds4.imds;
+    % imds5 = loaded_imds5.imds;
+    % imds6 = loaded_imds6.imds;
+    % imds7 = loaded_imds7.imds;
+    % imds8 = loaded_imds8.imds;
+    % 
+    % loaded_imds_test = load(fullfile(fullpath_baseDir, 'imds_test.mat'));
+    % imds_test = loaded_imds_test.imds_test;
+    
+
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     usernumber = 8;  
     varSize=32;
     
@@ -148,6 +193,7 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS_withD
     
     currentRefParams = avgParams(i);
 
+<<<<<<< HEAD
     for user = 1:usernumber
         if FragSDS==1 && percentages(user)~=1
             % Load dataset for the user
@@ -165,6 +211,59 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS_withD
 
     for user=1:1:usernumber  
 
+=======
+    categories = {'deer','dog','frog','cat','bird','automobile','horse','ship','truck','airplane'};
+    
+    if ruche
+        rootFolder = '/gpfs/workdir/costafrelu/cifar10Test';
+    else
+        rootFolder = 'cifar10Test';
+    end
+     
+    imds_test = imageDatastore(fullfile(rootFolder, categories), ...
+        'LabelSource', 'foldernames');
+    
+    
+     categories = {'deer','dog','frog','cat','bird','automobile','horse','ship','truck','airplane'};
+    
+     if ruche
+         rootFolder = '/gpfs/workdir/costafrelu/cifar10Train';
+     else 
+         rootFolder = 'cifar10Train';
+     end
+      
+     imds = imageDatastore(fullfile(rootFolder, categories), ... 
+        'LabelSource', 'foldernames');
+
+    
+         %%
+        %%%%%%%%%%%%%%%%%%%% IID dataset %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+        %CHANGE
+        % [imds1, imds2, imds3, imds4, imds5, imds6, imds7, imds8] = splitEachLabel(imds, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125);
+       
+    % for user = 1:usernumber
+    % 
+    % end
+
+    for user=1:1:usernumber  
+
+            % Load dataset for the user
+            % loaded_imds = load(fullfile(fullpath_baseDir, sprintf('imds%d.mat', user)));
+            % imds = loaded_imds.imds;
+    
+            % Shuffle and split the dataset according to the current percentage
+            % imds = shuffle(imds);
+            % imds = splitEachLabel(imds, percentages(user));  % Use the dynamically chosen percentage
+    
+        imds = shuffle(imds);
+        [splits{1:8}] = splitEachLabel(imds, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125);  % Split into 8 parts IT IS IID
+        imds_user = splits{user}; 
+        if FragSDS==1 && percentages(user)~=1
+            imds_user = splitEachLabel(imds_user, percentages(user));
+        end
+        eval(sprintf('imds%d = imds_user;', user));
+        
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
         clear netvaluable;
         Winstr1=strcat('net',int2str(user));     
         midstr=strcat('imds',int2str(user)); 
@@ -256,6 +355,11 @@ function [accuracyFitness, RB_usedAverage]  = runFLEnviroment_RUCHE_sameDS_withD
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
     fprintf('Valor de user: %d, Valor de i: %d \n', user, i);
+<<<<<<< HEAD
+=======
+    fprintf('Policy PI numero: %d \n', iPI);
+    fprintf('Percentage: %d \n', iPER);
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     end
     
     %%%%%%%%%%%%%%%%%%%%%%%%% User selection %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

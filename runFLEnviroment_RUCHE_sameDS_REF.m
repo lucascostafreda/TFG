@@ -2,14 +2,21 @@
 % function [deviationFitness, accuracyFitness, RB_usedAverage, average_deviation, varianzas]  = runFLEnviroment_RUCHE_noQ_sameDS_2(PI, iteration, averagenumber, r,...
 %     ruche,verbose, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, refModelName, directory_RefModel,directory_tempDir, FragSDS, percentages, iPI)
   
+<<<<<<< HEAD
 function [accuracyFitness]  = runFLEnviroment_RUCHE_sameDS_REF(iteration, averagenumber,...
     verbose, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, directory_RefModel, FragSDS, percentages, fullpath_tempDir, fullpath_baseDir2) 
+=======
+function [accuracyFitness]  = runFLEnviroment_RUCHE_sameDS_REF(iteration, averagenumber, ruche,...
+    verbose, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, FragSDS, percentages, fullpath_tempDir, fullpath_baseDir2) 
+
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
    % Este cambia en que imporatas la distribución del DS creado por el
    % RefModel
    % Además, hay que tener MUCHO cuidado que lo compares también con el REF
    % MOD que corresponde a la distribución anterior
     % Inicializar baseDir y tempDir según el valor de ruche 
     
+<<<<<<< HEAD
      fullpath_baseDir = fullfile('/gpfs/workdir/costafrelu/RefModelParam_noQ_sameDS/', directory_RefModel);
 
     % load(fullfile(fullpath_baseDir, refModelName)); % Carga `allParams`
@@ -34,6 +41,32 @@ function [accuracyFitness]  = runFLEnviroment_RUCHE_sameDS_REF(iteration, averag
     loaded_imds_test = load(fullfile(fullpath_baseDir, 'imds_test.mat'));
     imds_test = loaded_imds_test.imds_test;
     
+=======
+     % fullpath_baseDir = fullfile('/gpfs/workdir/costafrelu/RefModelParam_noQ_sameDS/', directory_RefModel);
+
+    % load(fullfile(fullpath_baseDir, refModelName)); % Carga `allParams`
+
+    % loaded_imds1 = load(fullfile(fullpath_baseDir, 'imds1.mat'));
+    % loaded_imds2 = load(fullfile(fullpath_baseDir, 'imds2.mat'));
+    % loaded_imds3 = load(fullfile(fullpath_baseDir, 'imds3.mat'));
+    % loaded_imds4 = load(fullfile(fullpath_baseDir, 'imds4.mat'));
+    % loaded_imds5 = load(fullfile(fullpath_baseDir, 'imds5.mat'));
+    % loaded_imds6 = load(fullfile(fullpath_baseDir, 'imds6.mat'));
+    % loaded_imds7 = load(fullfile(fullpath_baseDir, 'imds7.mat'));
+    % loaded_imds8 = load(fullfile(fullpath_baseDir, 'imds8.mat'));
+    % imds1 = loaded_imds1.imds;
+    % imds2 = loaded_imds2.imds;
+    % imds3 = loaded_imds3.imds;
+    % imds4 = loaded_imds4.imds;
+    % imds5 = loaded_imds5.imds;
+    % imds6 = loaded_imds6.imds;
+    % imds7 = loaded_imds7.imds;
+    % imds8 = loaded_imds8.imds;
+    % 
+    % loaded_imds_test = load(fullfile(fullpath_baseDir, 'imds_test.mat'));
+    % imds_test = loaded_imds_test.imds_test;
+
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     usernumber = 8;  
     varSize=32;
     
@@ -89,11 +122,46 @@ function [accuracyFitness]  = runFLEnviroment_RUCHE_sameDS_REF(iteration, averag
     % for rep = 1:1:PI_trials  
     for average=1:1:averagenumber
         
+<<<<<<< HEAD
+=======
+        %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    categories = {'deer','dog','frog','cat','bird','automobile','horse','ship','truck','airplane'};
+    
+    if ruche
+        rootFolder = '/gpfs/workdir/costafrelu/cifar10Test';
+    else
+        rootFolder = 'cifar10Test';
+    end
+     
+    imds_test = imageDatastore(fullfile(rootFolder, categories), ...
+        'LabelSource', 'foldernames');
+    
+    
+     categories = {'deer','dog','frog','cat','bird','automobile','horse','ship','truck','airplane'};
+    
+     if ruche
+         rootFolder = '/gpfs/workdir/costafrelu/cifar10Train';
+     else 
+         rootFolder = 'cifar10Train';
+     end
+      
+     imds = imageDatastore(fullfile(rootFolder, categories), ... 
+        'LabelSource', 'foldernames');
+
+     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
         filename_acc = sprintf('Temp_Accuracy.mat');
 
         filename_params = sprintf('Ref_Model_%d.mat', average); % Auxiliar
         allParams = struct();
 
+<<<<<<< HEAD
+=======
+    
+
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     %%%%%%%%%%%%% local model of each user%%%%%%%%%%%%%%%%%%%%%%%  
     w1=[];
     w2=[];
@@ -139,6 +207,7 @@ function [accuracyFitness]  = runFLEnviroment_RUCHE_sameDS_REF(iteration, averag
     
     % currentRefParams = avgParams(i);
 
+<<<<<<< HEAD
     for user = 1:usernumber
         if FragSDS==1 && percentages(user)~=1
             % Load dataset for the user
@@ -156,6 +225,33 @@ function [accuracyFitness]  = runFLEnviroment_RUCHE_sameDS_REF(iteration, averag
 
     for user=1:1:usernumber  
 
+=======
+    % for user = 1:usernumber
+    %     if FragSDS==1 && percentages(user)~=1
+    %         % Load dataset for the user
+    %         loaded_imds = load(fullfile(fullpath_baseDir, sprintf('imds%d.mat', user)));
+    %         imds = loaded_imds.imds;
+    % 
+    %         % Shuffle and split the dataset according to the current percentage
+    %         imds = shuffle(imds);
+    %         imds = splitEachLabel(imds, percentages(user));  % Use the dynamically chosen percentage
+    % 
+    %         % Assign the processed data back to the original variable dynamically
+    %         eval(sprintf('imds%d = imds;', user));
+    %    end
+    % end
+
+    for user=1:1:usernumber  
+
+        imds = shuffle(imds);
+        [splits{1:8}] = splitEachLabel(imds, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125, 0.125);  % Split into 8 parts
+        imds_user = splits{user}; 
+        if FragSDS==1 && percentages(user)~=1
+            imds_user = splitEachLabel(imds_user, percentages(user));
+        end
+        eval(sprintf('imds%d = imds_user;', user)); 
+
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
         clear netvaluable;
         Winstr1=strcat('net',int2str(user));     
         midstr=strcat('imds',int2str(user)); 
@@ -358,6 +454,12 @@ function [accuracyFitness]  = runFLEnviroment_RUCHE_sameDS_REF(iteration, averag
      average_accuracy = zeros(iteration,1);     
 
     for ite=1:1:iteration
+<<<<<<< HEAD
+=======
+        acc_aux=accuracy2(ite,:);
+        acc_name= sprintf('AccuracyRefModel_%d',ite);
+        save(fullfile(fullpath_tempDir, acc_name), 'acc_aux');
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
         average_accuracy(ite) = mean(squeeze(accuracy2(ite,:)), 'all');
     end
     

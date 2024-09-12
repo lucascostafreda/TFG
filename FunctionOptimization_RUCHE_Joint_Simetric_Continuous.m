@@ -19,7 +19,15 @@ KK=0;
   [r, eta, sigma] = parameters(CQI_indices);
   RB_usedMatrix = [];
 
+<<<<<<< HEAD
   weights=[0.5,0.5]; % [fidelity, accuracy]
+=======
+<<<<<<< HEAD
+  weights=[0.65,0.35]; % [fidelity, accuracy]
+=======
+  weights=[0.5,0.5]; % [fidelity, accuracy]
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
 
 %% FL environment
 iteration = 1; % initialization is what imapcts the learning the most short term
@@ -33,7 +41,15 @@ long = false;
 
 %% Computational capabilities
 FragSDS = 1;
+<<<<<<< HEAD
 percentages = [1/8, 1/4, 1/2, 1];
+=======
+<<<<<<< HEAD
+percentages = [1/8, 1/2, 3/4, 1];
+=======
+percentages = [1/8, 1/4, 1/2, 1];
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
 
 %% evaluation param
 % Mapa para rastrear las repeticiones de cada cromosoma
@@ -43,8 +59,18 @@ historicalChromosomeAccuracy = containers.Map('KeyType', 'char', 'ValueType', 'a
 chromosomeFitnessMap = containers.Map('KeyType', 'char', 'ValueType', 'any');
 
 %% GA
+<<<<<<< HEAD
 populationSize = 20;
 numberOfGenerations = 10;
+=======
+<<<<<<< HEAD
+populationSize = 25;
+numberOfGenerations = 15;
+=======
+populationSize = 20;
+numberOfGenerations = 10;
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
 adjustPIEpoch = 4;
 increment=0.01;
 
@@ -65,22 +91,62 @@ PIprocessed=numberOfGenerations*populationSize;
 
   if ruche
       if ~long
+<<<<<<< HEAD
           refModelName = 'Ref_Model_15_i_15_r_noQ';
           directory_RefModel = 'refModel_15_i_15_withFragSDS';  
+=======
+<<<<<<< HEAD
+          % refModelName = 'Ref_Model_15_i_15_r_noQ';
+          % directory_RefModel = 'refModel_15_i_15_withFragSDS';  
+          refModelName = 'Ref_Model_5_i_5_avg';
+          directory_RefModel = 'RefMod_i_5_avg_5_noniid';  
+=======
+          refModelName = 'Ref_Model_15_i_15_r_noQ';
+          directory_RefModel = 'refModel_15_i_15_withFragSDS';  
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
       else
           refModelName = 'Ref_Model_70_i_3_r_noQ';     
           directory_RefModel = 'refModel_70_i_3_avg'; 
       end
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+      baseDir_functionOpt = '/gpfs/workdir/costafrelu/FunctionOptimization_sameDS/';
+  else
+      if ~long
+          % refModelName = 'Ref_Model_5_i_5_r_noQ';
+          refModelName = 'Ref_Model_5_i_5_r_noQ';
+          % directory_RefModel = 'refModel_5_i_5_av';  
+          directory_RefModel = 'RefMod_i_5_avg_5';  
+      else
+          refModelName = 'Ref_Model_300_i_2_r_noQ';     
+          directory_RefModel = 'RefMod_temporaryDir_i_300_avg_2'; 
+      end  
+=======
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
       baseDir_functionOpt = '/gpfs/workdir/costafrelu/FunctionOptimization_noQ_sameDS/';
   else
       refModelName = 'Ref_Model_1_i_1_r_noQ';
       directory_RefModel = 'refModel_1_i_1';
+<<<<<<< HEAD
+=======
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
       baseDir_functionOpt = '..\workdir\FunctionOptimization\noQ_sameDS';
   end
 
 directory_tempDir = sprintf('i_%d_avg_%d', iteration, averagenumber);
 
+<<<<<<< HEAD
 directory_FO_Trial_Config = sprintf('gen%d_popu%d_ite%d_avg%d_fid%.2f_acc%.2f_JOINT_simetric', numberOfGenerations, populationSize, iteration, averagenumber, weights(1), weights(2));
+=======
+<<<<<<< HEAD
+directory_FO_Trial_Config = sprintf('gen%d_popu%d_ite%d_avg%d_fid%.2f_acc%.2f_SIGMOID_noniidDS_RefMod', numberOfGenerations, populationSize, iteration, averagenumber, weights(1), weights(2));
+=======
+directory_FO_Trial_Config = sprintf('gen%d_popu%d_ite%d_avg%d_fid%.2f_acc%.2f_JOINT_simetric', numberOfGenerations, populationSize, iteration, averagenumber, weights(1), weights(2));
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
 
 fullPath = createVersionedDirectory(baseDir_functionOpt, directory_FO_Trial_Config);
 
@@ -238,28 +304,96 @@ end
 function [normalizedFidelity, normalizedAccuracy] = normalizeGlobalScores(fidelity, accuracy)
     % Identify valid indices where fidelity is not -15 and accuracy is not 0
     validIndices = fidelity ~= -15 & accuracy ~= 0;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+    % Initialize normalized scores
+    normalizedFidelity = zeros(size(fidelity));
+    normalizedAccuracy = zeros(size(accuracy));
+
+=======
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     
     % Initialize normalized scores
     normalizedFidelity = zeros(size(fidelity));
     normalizedAccuracy = zeros(size(accuracy));
     
+<<<<<<< HEAD
+=======
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     % Only proceed with normalization if there are valid entries
     if any(validIndices)
         validFidelity = fidelity(validIndices);
         validAccuracy = accuracy(validIndices);
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+        minFidelity = min(validFidelity);
+        maxFidelity = max(validFidelity);
+        normalizedFidelity(validIndices) = (validFidelity - minFidelity) / (maxFidelity - minFidelity); %Son valores negativos los qeu recibo. El mayor será mejor
+
+=======
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
         
         minFidelity = min(validFidelity);
         maxFidelity = max(validFidelity);
         normalizedFidelity(validIndices) = (validFidelity - minFidelity) / (maxFidelity - minFidelity);
         
+<<<<<<< HEAD
+=======
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
         minAccuracy = min(validAccuracy);
         maxAccuracy = max(validAccuracy);
         normalizedAccuracy(validIndices) = (validAccuracy - minAccuracy) / (maxAccuracy - minAccuracy);
     end
 end
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+% function [normalizedDeviation, normalizedAccuracy] = normalizeGlobalScores(deviation, accuracy)
+%     % Define the midpoint and steepness for the sigmoid function
+%     midpointDev = mean(deviation);
+%     rangeDev = max(deviation) - min(deviation);
+%     steepnessDev = 1 / rangeDev * 4;  % Adjust steepness appropriately
+% 
+%     midpointAcc = mean(accuracy);
+%     rangeAcc = max(accuracy) - min(accuracy);
+%     steepnessAcc = 1 / rangeAcc * 10;
+% 
+%     % Adjust the deviation sigmoid to decrease as deviation increases
+%     sigmoidDeviation = 1 ./ (1 + exp(steepnessDev * (deviation - midpointDev)));
+%     % Accuracy sigmoid increases as accuracy increases
+%     sigmoidAccuracy = 1 ./ (1 + exp(-steepnessAcc * (accuracy - midpointAcc)));
+% 
+%     % Normalize deviations and accuracies after sigmoid transformation
+%     minDev = min(sigmoidDeviation);
+%     maxDev = max(sigmoidDeviation);
+%     normalizedDeviation = (sigmoidDeviation - minDev) / (maxDev - minDev);
+% 
+%     minAcc = min(sigmoidAccuracy);
+%     maxAcc = max(sigmoidAccuracy);
+%     normalizedAccuracy = (sigmoidAccuracy - minAcc) / (maxAcc - minAcc);
+% end
+
+
+=======
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
 function saveChromosomeData(fullPath, unifiedMatrix, chromosomeData, genTracking, iGen)
     fileName = fullfile(fullPath, sprintf('ChromosomeData_Gen%d.mat', iGen));
     save(fileName, 'unifiedMatrix', 'chromosomeData', 'genTracking');
     fprintf('Data for Generation %d saved successfully.\n', iGen);
+<<<<<<< HEAD
 end
+=======
+<<<<<<< HEAD
+end
+=======
+end
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)

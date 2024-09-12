@@ -32,6 +32,21 @@ end
 
 function decodedChromosome = RepairDecodedChromosome(decodedChromosome, r, available_RBs)
       % Calculate initial resource usage
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    totalUsage = sum(decodedChromosome .* r); 
+    % Calculate the excess usage beyond the available resources
+    excessUsage = totalUsage - available_RBs;
+    if excessUsage > 0
+        % Calculate the total weight of resources
+        totalWeight = sum(r);
+        % Calculate the uniform reduction factor
+        uniformReduction = excessUsage / totalWeight;
+        % Apply uniform reduction to each component, ensuring no values fall below zero
+        decodedChromosome = max(decodedChromosome - uniformReduction, 0);
+=======
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     totalUsage = sum(decodedChromosome .* r);
     
     % Calculate the excess usage beyond the available resources
@@ -47,6 +62,10 @@ function decodedChromosome = RepairDecodedChromosome(decodedChromosome, r, avail
         % Apply uniform reduction to each component, ensuring no values fall below zero
         decodedChromosome = max(decodedChromosome - uniformReduction, 0);
         
+<<<<<<< HEAD
+=======
+>>>>>>> 021be8e40437ec950ed2e73942ea9f70655ac38e
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
         % Recalculate total usage to ensure it is within the limit due to rounding or precision issues
         totalUsage = sum(decodedChromosome .* r);
         while totalUsage > available_RBs

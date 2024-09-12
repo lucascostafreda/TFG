@@ -1,8 +1,13 @@
 
 %%%%%%%%%%%%%%%% GRAFICA %%%%%%%%%%%%%%%%%%
 
+<<<<<<< HEAD
 function comparePIConfigurations(ruche, iteration, average, numDatasets)
     % Determine base directory
+=======
+function comparePIConfigurations(ruche, iteration, average, numDatasets, plotAveraged)
+      % Determine base directory
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     if ruche
         baseDir = '/gpfs/workdir/costafrelu/temporaryMat/';
     else
@@ -13,6 +18,7 @@ function comparePIConfigurations(ruche, iteration, average, numDatasets)
     directory_tempDir = sprintf('i_%d_avg_%d', iteration, average);
     fullPath = fullfile(baseDir, directory_tempDir);
 
+<<<<<<< HEAD
     % Load deviation data
     deviations = loadDeviations(fullPath, numDatasets, 'Deviation');
 
@@ -75,10 +81,123 @@ function plotAccuracyComparison(fullPath, numAccuracies)
         accuracies{i} = data.average_accuracy;
     end
 
+=======
+    if plotAveraged
+        % Plot averaged deviations
+        averagedDeviations = loadAveragedVectors(fullPath, 'Deviation');
+        plotDeviations(averagedDeviations, 'Averaged Deviation');
+
+        % Plot averaged accuracies
+        averagedAccuracies = loadAveragedVectors(fullPath, 'Accuracy');
+        plotAccuracyComparison(averagedAccuracies, 'Averaged Accuracy');
+    else
+        % Load deviation data
+        deviations = loadDeviations(fullPath, numDatasets, 'Deviation');
+        % Plot all deviations
+        plotDeviations(deviations, 'Deviation');
+
+        % Load and plot accuracy data
+        accuracies = loadDeviations(fullPath, numDatasets, 'Accuracy');
+        plotAccuracyComparison(accuracies, 'Accuracy');
+    end
+end
+
+function deviations = loadDeviations(fullPath, numFiles, mode)
+    deviations = cell(1, numFiles);
+    for i = 1:numFiles
+        filePath = fullfile(fullPath, sprintf('Temp_%s_PI_%d.mat', mode, i));
+        data = load(filePath);
+        
+        % Check if data is already a vector
+        if isvector(data)
+            deviations{i} = data;
+        else
+            % List all variables in the loaded file
+            vars = fieldnames(data);
+            
+            % Check if 'average_deviation' exists, otherwise use the first variable
+            deviations{i} = data.(vars{1});
+        end
+    end
+end
+
+function averagedVectors = loadAveragedVectors(fullPath, mode)
+    averagedVectors = cell(1, 8);  % Assuming 8 averaged vectors for both modes
+    for i = 1:8
+        if strcmp(mode, 'Deviation')
+            fileName = sprintf('AveragedModel_Dev_%d.mat', i);
+        else
+            fileName = sprintf('AveragedModel_Acc_%d.mat', i);
+        end
+        filePath = fullfile(fullPath, fileName);
+        data = load(filePath);
+        vars = fieldnames(data);
+        averagedVectors{i} = data.(vars{1});
+    end
+end
+
+function plotDeviations(deviations, titleSuffix)
+    figure;
+    hold on;
+
+    % Define custom colors as RGB triplets
+    customColors = [
+        1, 0, 0;  % Red
+        0, 1, 0;  % Green
+        0, 0, 1;  % Blue
+        1, 1, 0;  % Yellow
+        0, 1, 1;  % Cyan
+        1, 0, 1;  % Magenta
+        0.5, 0.5, 0.5;  % Gray
+        0, 0.5, 0;  % Dark Green
+    ];
+
+    % Define custom names for each plot
+    customNames = {
+         '\pi_A'
+         '\pi_B'
+         '\pi_C'
+         '\pi_D'
+         '\pi_E'
+         '\pi_F'
+         '\pi_H'
+         '\pi_I'
+    };
+
+    markers = {'o', 's', '^', 'v', '>', '<', 'p', 'h', '*', '+'};
+
+    % Ensure there are enough colors and names defined
+    if size(customColors, 1) < numel(deviations) || length(customNames) < numel(deviations)
+        error('Define more colors or names to match the number of deviations');
+    end
+
+    % Plot each deviation vector with custom colors and names
+    for i = 1:numel(deviations)
+        if ~isempty(deviations{i})
+            plot(deviations{i}, 'Color', customColors(i, :), 'DisplayName', customNames{i});
+        else
+            warning('Empty data at index %d, skipping plot for this dataset.', i);
+        end
+    end
+
+    % Enhance the plot
+    xlabel('Iteration');
+    ylabel('Deviation');
+    title([titleSuffix, ' ']);
+
+    % Customize and display the legend
+    legend('show', 'Location', 'southeast');  % Set legend to the bottom right corner
+    grid on;  % Optional: Add a grid for easier comparison
+    hold off;
+end
+
+function plotAccuracyComparison(accuracies, titleSuffix)
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     % Create a new figure for the plot
     figure;
     hold on;
 
+<<<<<<< HEAD
     % Define a colormap for visual distinction of the lines
     colors = jet(numAccuracies);  % Adjusted to handle dynamic number of datasets
     markers = {'o', 's', '^', 'v', '>', '<', 'p', 'h', '*', '+'};  % List of markers for different lines
@@ -87,16 +206,67 @@ function plotAccuracyComparison(fullPath, numAccuracies)
     for i = 1:numAccuracies
         markerIndex = mod(i-1, length(markers)) + 1;  % Cycle through markers if there are more lines than markers
         plot(accuracies{i}, 'Color', colors(i, :), 'Marker', markers{markerIndex}, 'DisplayName', sprintf('Accuracy PI %d', i));
+=======
+    % Define custom colors as RGB triplets
+    customColors = [
+        1, 0, 0;  % Red
+        0, 1, 0;  % Green
+        0, 0, 1;  % Blue
+        1, 1, 0;  % Yellow
+        0, 1, 1;  % Cyan
+        1, 0, 1;  % Magenta
+        0.5, 0.5, 0.5;  % Gray
+        0, 0.5, 0;  % Dark Green
+        0.5, 0, 0.5  % Purple
+    ];
+
+    % Define custom names for each plot
+    customNames = {
+         '\pi_A'
+         '\pi_B'
+         '\pi_C'
+         '\pi_D'
+         '\pi_E'
+         '\pi_F'
+         '\pi_H'
+         '\pi_I'
+    };
+
+    markers = {'o', 's', '^', 'v', '>', '<', 'p', 'h', '*', '+'};
+
+    % Ensure there are enough colors and names defined
+    if size(customColors, 1) < numel(accuracies) || length(customNames) < numel(accuracies)
+        error('Define more colors or names to match the number of accuracies');
+    end
+
+    % Plot each accuracy vector with custom colors and names
+    for i = 1:numel(accuracies)
+        if ~isempty(accuracies{i})
+            plot(accuracies{i}, 'Color', customColors(i, :), 'DisplayName', customNames{i});
+        else
+            warning('Empty data at index %d, skipping plot for this dataset.', i);
+        end
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
     end
 
     % Enhance the plot
     xlabel('Iteration');
     ylabel('Accuracy');
+<<<<<<< HEAD
     title('Accuracy Vectors Comparison');
     legend show;  % Display a legend to identify the vectors
     grid on;  % Optional: Add a grid for easier comparison
 end
 
+=======
+    title([titleSuffix, ' ']);
+
+    % Customize and display the legend
+    legend('show', 'Location', 'southeast');  % Set legend to the bottom right corner
+    grid on;  % Optional: Add a grid for easier comparison
+    hold off;
+end
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
 
 %%%%%%%%%%%%%%%% TABLA %%%%%%%%%%%%%%%%%%
 % 

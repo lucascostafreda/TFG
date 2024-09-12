@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 clear all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% data processing %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -601,3 +602,74 @@ eta=ones(1,length(r))*3;
 sigma=ones(1,length(r));
 end
 
+=======
+% function [encodedChromosome, decodedChromosome, scores] = test_adjustSizeDS(decodedChromosome, numberOfVariables, numberOfGenes, r, available_RBs, percentages)
+%     % Normalización de los valores de 'r' y 'percentages'
+%     normalizedR = r / sum(r);
+%     normalizedPercentages = percentages / sum(percentages);
+% 
+%     % Double check the constraint after encoding
+%     % while sum(decodedChromosome .* r) > available_RBs
+%     while true
+%         % Calculate relevance scores
+%         effectivenessScores = normalizedPercentages ./ normalizedR;
+%         scores=sum(effectivenessScores);
+%         [~, order] = sort(effectivenessScores, 'ascend');  % Order to adjust by least cost effectiveness
+% 
+%         % Reduce the quantification level one step at a time, following the order of importance
+%         for idx = order
+%             currentStepSize = 1 / (2^5 - 1);  % smallest quantification unit
+%             if decodedChromosome(idx) > currentStepSize
+%                 decodedChromosome(idx) = decodedChromosome(idx) - currentStepSize;
+%                 encodedChromosome = EncodeChromosome(decodedChromosome, numberOfVariables, numberOfGenes);
+%                 if sum(decodedChromosome .* r) <= available_RBs
+%                     break;  % If within limits, stop adjusting
+%                 end
+%             end
+%         end
+%     end
+% end
+
+function sortedTable = test_adjustSizeDS(inputTable, r)
+    if width(inputTable) < 9
+        error('Input table must have at least 9 columns.');
+    end
+
+    % Validate that the vector r has 8 elements
+    if length(r) ~= 8
+        error('Vector r must have 8 elements.');
+    end
+
+    % Extract numeric columns
+    numericCols = varfun(@isnumeric, inputTable, 'OutputFormat', 'uniform');
+    numericData = inputTable{:, numericCols};
+
+    % Ensure there are at least 9 numeric columns
+    if size(numericData, 2) < 9
+        error('Table must have at least 9 numeric columns.');
+    end
+
+    % Create the new column by multiplying the first 8 numeric columns by the vector r
+    newColumn = sum(numericData(:, 1:8) .* r, 2);
+
+    % Append the new column to the numeric data
+    numericDataWithNewColumn = [numericData, newColumn];
+
+    % Sort the numeric data by the 9th column in descending order
+    [~, sortOrder] = sort(numericDataWithNewColumn(:, 9), 'descend');
+
+    % Reorganize the whole numeric data based on the sorted order
+    sortedNumericData = numericDataWithNewColumn(sortOrder, :);
+
+    % Recreate the table with the sorted numeric data
+    tableSorted = inputTable;
+    tableSorted{:, numericCols} = sortedNumericData(:, 1:end-1);
+
+    % Add the new column to the sorted table
+    newColumnName = 'NewColumn';
+    tableSorted.(newColumnName) = sortedNumericData(:, end);
+
+    % Reorder the rows of the original table based on the sort order
+    sortedTable = tableSorted(sortOrder, :);
+end
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)

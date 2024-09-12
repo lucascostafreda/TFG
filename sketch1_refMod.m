@@ -1,7 +1,12 @@
 %% COMPARISON WITH BEST ESTIMATED PI
 
+<<<<<<< HEAD
 iteration=300;
 averagenumber=1;
+=======
+iteration=250;
+averagenumber=3;
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
 verboseFL = false;
 miniBatchSize = 100;
 executionEnviroment ='parallel';
@@ -13,6 +18,7 @@ long=true;
 
 %% RUCHE OR NOT
 ruche = true;
+<<<<<<< HEAD
 if ruche
       if ~long
           refModelName = 'Ref_Model_15_i_15_r_noQ';
@@ -39,11 +45,39 @@ directory_baseDir = sprintf('RefMod_i_%d_avg_%d', iteration, averagenumber);
 fullpath_tempDir = fullfile('/gpfs/workdir/costafrelu/temporaryMat/', directory_tempDir);
 if ~exist(fullpath_tempDir, 'dir')
     mkdir(fullpath_tempDir);
+=======
+
+directory_tempDir = sprintf('RefMod1_temporaryDir_nonIID_i_%d_avg_%d', iteration, averagenumber); % para ACC y DEV este es el nombre de la ULTIMA CARPETA
+directory_baseDir = sprintf('RefMod_i_%d_avg_%d', iteration, averagenumber);
+
+
+if ruche
+      % if ~long
+      %     refModelName = 'Ref_Model_15_i_15_r_noQ';
+      %     directory_RefModel = 'refModel_15_i_15_withFragSDS';  
+      % else
+      %     refModelName = 'Ref_Model_70_i_3_r_noQ';     
+      %     directory_RefModel = 'refModel_70_i_3_avg'; 
+      % end  
+      baseDir = '/gpfs/workdir/costafrelu/Sketch.m/'; 
+      fullpath_tempDir = fullfile('/gpfs/workdir/costafrelu/temporaryMat/', directory_tempDir);
+else
+      % if ~long
+      %     refModelName = 'Ref_Model_15_i_15_r_noQ';
+      %     directory_RefModel = 'refModel_15_i_15_withFragSDS';  
+      % else
+      %     refModelName = 'Ref_Model_70_i_3_r_noQ';     
+      %     directory_RefModel = 'refModel_70_i_3_avg'; 
+      % end  
+      baseDir = fullfile('..\workdir\RefModelParam_noQ_sameDS\RUCHE');
+      fullpath_tempDir = fullfile('..\workdir\temporaryMat', directory_tempDir);
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
 end
 fullpath_baseDir2=fullfile(baseDir,directory_baseDir);
 if ~exist(fullpath_baseDir2, 'dir')
     mkdir(fullpath_baseDir2);
 end
+<<<<<<< HEAD
 
 FragSDS = 1;
 % percentages =[1/8,1/8,1/8,1/8,1/8,1/8,1/8,1/8,1/8];
@@ -78,5 +112,20 @@ chromosomes = [1,1,1,1,1,1,1,1];
 
 [accuracyFitness]  = runFLEnviroment_RUCHE_sameDS_REF(iteration, averagenumber,... %REFERENCE
     verboseFL, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, directory_RefModel, FragSDS, percentages, fullpath_tempDir, fullpath_baseDir2); 
+=======
+if ~exist(fullpath_tempDir, 'dir')
+    mkdir(fullpath_tempDir);
+end
+
+
+
+FragSDS = 1;
+percentages = [1,1,1,1,1,1,1,1];
+chromosomes = [1,1,1,1,1,1,1,1];
+
+
+[accuracyFitness]  = runFLEnviroment_RUCHE_sameDS_REF(iteration, averagenumber, ruche, ... %REFERENCE
+    verboseFL, miniBatchSize, executionEnviroment, AccDevMat, Shuffle, FragSDS, percentages, fullpath_tempDir, fullpath_baseDir2); 
+>>>>>>> 9c6ccc124 (Reinicializando el repositorio)
 
 
